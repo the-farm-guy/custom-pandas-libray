@@ -23,6 +23,13 @@ def head(data, n = 2):
 def tail(data, n = 2):
     return format_as_table(data[-n : ])
 
+def columns(data):
+    # print(len(data))
+    return list(data[0].keys())
+
+def shape(data):
+    return (len(data) - 1, len(list(data[0].keys())))
+
 def read_csv(file_path, dtype, delimiter = ';', skiprows = 0, header = True):
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
@@ -63,7 +70,7 @@ def read_csv(file_path, dtype, delimiter = ';', skiprows = 0, header = True):
     # print(data)
     return data
 
-data = read_csv('email.csv', dtype = {'Identifier' : float}, delimiter = ';', skiprows = 0, header = True)
+data = read_csv('email.csv', dtype = {'Identifier' : float}, delimiter = ',', skiprows = 0, header = True)
 # print(data)
 
 df = format_as_table(data)
@@ -74,3 +81,9 @@ print(head(data))
 
 print('\n')
 print(tail(data))
+
+print('\n')
+print(columns(data))
+
+print('\n')
+print(shape(data))
