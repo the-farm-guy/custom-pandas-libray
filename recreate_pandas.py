@@ -1,7 +1,10 @@
 import csv
 import os
+import json 
+from  openpyxl import Workbook
+import openpyxl
 
-class read_csvs:
+class ReadCsvJson:
     def __init__(self, file_path = None, dtype = None, delimiter = ',', skiprows = 0, header = True):
         self.file_path = file_path
         self.dtype = dtype or {}
@@ -11,7 +14,12 @@ class read_csvs:
         self.data = []
         
         if file_path:
-            self.data = self.read_csv()
+            if file_path.endswith('.csv'):
+                self.data = self.read_csv()
+            elif file_path.endswith('.json'):
+                self.data = self.read_json(file_path = file_path)
+            elif file_path.endswith('.xlsx'):
+                self.data = self.to_excel(file_path = file_path)
 
     def __str__(self):
         """Return a string representation when print() is called on the object"""
@@ -28,7 +36,7 @@ class read_csvs:
         """Enable slicing with [start:stop] syntax, single item access with [index], or column access with ['column_name']"""
         
         if isinstance(key, slice):    
-            result = read_csvs()
+            result = ReadCsvJson()
             result.data = self.data[key]
             return result
         
@@ -38,7 +46,7 @@ class read_csvs:
             if key not in self.columns():
                 raise KeyError(f"Column '{key}' not found. Available columns: {', '.join(self.columns())}")
             
-            result_single = read_csvs()
+            result_single = ReadCsvJson()
             result_single.data = [{key : row[key]} for row in self.data]
             return result_single
         
@@ -50,7 +58,7 @@ class read_csvs:
             if missing_columns:
                 raise KeyError(f"Columns {missing_columns} not found. Available columns: {', '.join(self.columns())}")
 
-            result = read_csvs()
+            result = ReadCsvJson()
             result.data = [{col: row[col] for col in key} for row in self.data]
             return result
         
@@ -160,41 +168,54 @@ class read_csvs:
         if not self.data:
             return (0, 0)
         return (len(self.data), len(list(self.data[0].keys())))
+    
+    def to_csv(self, file_path, delimiter = ','):
+        if not self.data:
+            raise ValueError('no data found')
+        
+        with open(file_path, 'w') as file:
+            fieldnames = self.columns()
+            writer = csv.DictWriter(file, fieldnames = fieldnames, delimiter = delimiter)
+            writer.writeheader()
+            writer.writerows(self.data)
+            print(f'data has written to the {file_path}')
 
+    def to_json(self, file_path = None, indent = None):
+        if not self.data:
+            raise ValueError('no data found')
+        
+        if file_path:
+            with open(file_path, 'w') as file:
+                json.dump(self.data, file, indent = indent)
+            print(f'data has been written to the : {file_path}')
+
+        else:
+            return json.dumps(self.data, indent = indent)
+        
+    def read_json(self, file_path):
+        if not os.path.exists(file_path):
+            raise FileNotFoundError('could not find file')
+
+        with open(file_path, 'r') as file:
+            self.data = json.load(file)
+        return self.data
+
+    def to_excel(self, file_path):
+        if not self.data:
+            raise ValueError('no data found')
+        
+        work_book = Workbook()
+        work_session = work_book.active
+
+        columns = self.columns()
+        work_session.append(columns)
+
+        for row in self.data:
+            work_session.append([row[col] for col in columns])
+    
+        work_book.save(file_path)
+        print(f'data has been written to the : {file_path}')
+    
 if __name__ == "__main__":
-    data = read_csvs('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
-    # print(data.as_table())
-    
-    # print('\n')
-    # print(data.head())
-    
-    # print('\n')
-    # print(data.tail())
-    
-    # print('\n')
-    # print(data.columns())
-    
-    # print('\n')
-    # print(data.shape())
-    
-    # print('\n')
-    # print(data.head())
-    
-    # print('\n')
-    # print(data.tail())
-    
-    # print('\n')
-    # print(data.columns())
-    
-    # print('\n')
-    # print(data.shape())
-
-    # print('\n')
-    sliced_data = data['Year']
-    print(len(sliced_data))
-    print(type(sliced_data))
-
-    with open('testing_1.txt', 'w') as file:
-        file.write(str(sliced_data))
-
-    print(sliced_data.as_table())
+    # data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
+    data = ReadCsvJson()
