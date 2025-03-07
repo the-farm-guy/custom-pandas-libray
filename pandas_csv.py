@@ -3,7 +3,7 @@ import os
 
 def format_as_table(data, columns = None):
     if columns is None:
-        columns = data[0]
+        columns = data[0].keys()
 
     col_widths = {col: max(len(col), max(len(str(row.get(col, ''))) for row in data)) for col in columns}
     header = " | ".join(col.ljust(col_widths[col]) for col in columns)
@@ -13,7 +13,7 @@ def format_as_table(data, columns = None):
     for row in data:
         row_str = " | ".join(str(row.get(col, '')).ljust(col_widths[col]) for col in columns)
         rows.append(row_str)
-    
+
     table = f"{header}\n{separator}\n" + "\n".join(rows)
     return table
 
@@ -60,12 +60,17 @@ def read_csv(file_path, dtype, delimiter = ';', skiprows = 0, header = True):
                         raise ValueError(f"Failed to convert column '{col}' to {dtype[col].__name__} for value '{value}'")
                 raw_dict[col] = value
             data.append(raw_dict)
-    # return data
-    table = format_as_table(data, columns)
-    return table
+    # print(data)
+    return data
 
 data = read_csv('email.csv', dtype = {'Identifier' : float}, delimiter = ';', skiprows = 0, header = True)
+# print(data)
+
+df = format_as_table(data)
+print(df)
+
+print('\n')
 print(head(data))
+
 print('\n')
 print(tail(data))
-# print(data)
