@@ -235,8 +235,17 @@ class ReadCsvJson:
                 self.data.append(row_dict)
         
         return self.data
+    
+    def dropna(self, axis = 0, how = 'any'):
+        if axis ==0 :
+            if how == 'any':
+                filtered_row = []
+                for rows in self.data:
+                    add_row = True
+
+                    for value in rows.values():
+                        if value != None or value == '':
+                            pass
 
 if __name__ == "__main__":
     data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
-
-
