@@ -52,3 +52,7 @@ if __name__ == "__main__":
     #     file.write(data.as_table()) 
 
     # data.to_excel('output.xlsx')
+
+    #     data = ReadCsvJson(file_path = 'output.xlsx')
+    # with open('excel_testing.txt', 'w') as file:
+    #     file.write(data.as_table())

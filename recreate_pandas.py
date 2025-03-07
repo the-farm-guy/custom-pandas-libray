@@ -19,7 +19,7 @@ class ReadCsvJson:
             elif file_path.endswith('.json'):
                 self.data = self.read_json(file_path = file_path)
             elif file_path.endswith('.xlsx'):
-                self.data = self.to_excel(file_path = file_path)
+                self.data = self.read_excel(file_path = file_path)
 
     def __str__(self):
         """Return a string representation when print() is called on the object"""
@@ -84,6 +84,7 @@ class ReadCsvJson:
             with open(file_path, 'r') as file:
                 reader = csv.reader(file, delimiter=delimiter)
                 rows = list(reader)
+
         else:
             raise FileNotFoundError("couldn't find the file")
 
@@ -215,7 +216,27 @@ class ReadCsvJson:
     
         work_book.save(file_path)
         print(f'data has been written to the : {file_path}')
-    
+
+    def read_excel(self, file_path):
+        """Read data from an Excel file into the DataFrame."""
+
+        if not os.path.exists(file_path):
+            raise FileNotFoundError(f"File not found: {file_path}")
+        
+        workbook = openpyxl.load_workbook(file_path)
+        sheet = workbook.active
+
+        columns = [cell.value for cell in sheet[1]]
+        self.data = []
+
+        for row in sheet.iter_rows(min_row=2, values_only=True):    
+            if any(cell is not None for cell in row):
+                row_dict = {columns[i]: cell for i, cell in enumerate(row)}
+                self.data.append(row_dict)
+        
+        return self.data
+
 if __name__ == "__main__":
-    # data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
-    data = ReadCsvJson()
+    data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
+
+
