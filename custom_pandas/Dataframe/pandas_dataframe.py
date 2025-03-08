@@ -146,3 +146,35 @@ class DataFrame():
 
         return self.data
     
+    def replace(self, old_value, new_value):
+        for row in self.data:  
+            for key in row: 
+                if row[key] == old_value:  
+                    row[key] = new_value  
+        return self.data
+    
+    def fillna(self, value):
+        missing_indicators = ['', 'none', 'null', 'na', 'n/a', 'nan', '\'\'', '""', "''", "None"]
+        for rows in self.data:
+            for key in rows:
+                if rows[key].strip().lower() in missing_indicators:
+                    rows[key] = value
+
+        return self
+    
+    def isnull(self):
+        missing_indicators = {'', 'none', 'null', 'na', 'n/a', 'nan', '""', "''"}  
+        missing_values = [] 
+
+        for row in self.data:  
+            row_missing = {} 
+
+            for key, value in row.items():  
+                if value is None or str(value).strip().lower() in missing_indicators:
+                    row_missing[key] = True 
+                else:
+                    row_missing[key] = False 
+
+            missing_values.append(row_missing)  
+
+        return missing_values  
