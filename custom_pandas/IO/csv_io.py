@@ -1,6 +1,5 @@
 import csv
 import os 
-from excel_io import ExcelInputOutput
 
 class CsvInputOutput():
 
@@ -67,5 +66,4 @@ class CsvInputOutput():
             print(f'data has written to the {file_path}') 
 
 if __name__ == '__main__':
-    data = CsvInputOutput.read_csv(file_path = 'business.csv')
-    json_io = ExcelInputOutput().to_excel(file_path = 'output_1.xlsx', data = data ) 
+    pass
