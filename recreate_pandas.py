@@ -105,20 +105,16 @@ class ReadCsvJson:
 
         data = []
         for row in rows:
-            if len(row) != len(columns):
-                raise ValueError(f'row has {len(row)} columns but expected {len(columns)}')
-            else:
-                raw_dict = {}
-                for i, col in enumerate(columns):
-                    value = row[i]
-
-                    if dtype and col in dtype:
-                        try:
-                            value = dtype[col](value)
-                        except:
-                            raise ValueError(f"Failed to convert column '{col}' to {dtype[col].__name__} for value '{value}'")
-                    raw_dict[col] = value
-                data.append(raw_dict)
+            raw_dict = {}
+            for i, col in enumerate(columns):
+                value = row[i]
+                if dtype and col in dtype:
+                    try:
+                        value = dtype[col](value)
+                    except:
+                        raise ValueError(f"Failed to convert column '{col}' to {dtype[col].__name__} for value '{value}'")
+                raw_dict[col] = value
+            data.append(raw_dict)
         
         self.data = data
         # print(self.data)
@@ -236,16 +232,27 @@ class ReadCsvJson:
         
         return self.data
     
-    def dropna(self, axis = 0, how = 'any'):
-        if axis ==0 :
+    def dropna(self, axis=0, how='any'):
+        if axis == 0:   
             if how == 'any':
-                filtered_row = []
-                for rows in self.data:
-                    add_row = True
-
-                    for value in rows.values():
-                        if value != None or value == '':
-                            pass
+                self.data = [row for row in self.data if not any(value is None or str(value).strip() == '' for value in row.values())]
+            elif how == 'all':
+                self.data = [row for row in self.data if not all(value is None or str(value).strip() == '' for value in row.values())]
+        
+        elif axis == 1:
+            valid_columns = [col for col in self.columns() if any(row[col] is not None and str(row[col]).strip() != '' for row in self.data)]
+            self.data = [{col: row[col] for col in valid_columns} for row in self.data]
+        
+        else:
+            raise ValueError("axis must be 0 (rows) or 1 (columns)")
+        
+        return self
 
 if __name__ == "__main__":
     data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
+    dropped_data = data.dropna(axis = 0, how = 'any')
+    print(dropped_data)
+    # print(dropeed_data[5 : 8])
+
+    with open('dropna_testing.txt', 'w') as file:
+        file.write(dropped_data.as_table())
