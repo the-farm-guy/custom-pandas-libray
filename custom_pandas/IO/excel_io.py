@@ -23,18 +23,18 @@ class ExcelInputOutput():
         return data
     
     @classmethod
-    def to_excel(cls, file_path, data):
+    def to_excel(cls, file_path, data ):
         if not data:
             raise ValueError('no data found')
         
-        workbook = Workbook()
-        work_sheet = workbook.active
+        work_book = Workbook()
+        work_session = work_book.active
 
-        columns = data[0].keys()
-        work_sheet.append(columns)
+        columns = list(data[0].keys())
+        work_session.append(columns)
 
-        for rows in data:
-            work_sheet.append(rows[column] for column in columns)
-
-        workbook.save(file_path)
-        print(f'text has been saved to the : {file_path}')
+        for row in data:
+            work_session.append([row[col] for col in columns])
+    
+        work_book.save(file_path)
+        print(f'data has been written to the : {file_path}')

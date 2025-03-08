@@ -1,7 +1,6 @@
 import csv
 import os 
-from as_table import AsTable
-from json_io import JsonInputOutput
+from excel_io import ExcelInputOutput
 
 class CsvInputOutput():
 
@@ -69,4 +68,4 @@ class CsvInputOutput():
 
 if __name__ == '__main__':
     data = CsvInputOutput.read_csv(file_path = 'business.csv')
-    json_io = JsonInputOutput().to_json(data, file_path = 'output_1.json', orient = 'columns')
+    json_io = ExcelInputOutput().to_excel(file_path = 'output_1.xlsx', data = data ) 
