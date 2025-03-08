@@ -80,4 +80,3 @@ class DataFrame():
     
     def shape(self):
         return (len(self.data), len(list(self.data[0].keys())))
-    
