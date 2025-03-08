@@ -46,11 +46,11 @@ class DataFrame():
 
     def columns(self):
         return list(self.data[0].keys()) if self.data else []
-        
-    def as_table(self, data=None, columns=None):
+    
+    @classmethod
+    def as_table(CLS, data = None, columns = None):
         """Format data as a string table."""
 
-        data = data or self.data
         if not data:
             return "Empty dataset"
             
@@ -80,3 +80,68 @@ class DataFrame():
     
     def shape(self):
         return (len(self.data), len(list(self.data[0].keys())))
+    
+    def dropna(self, axis=0, how='any'):
+        missing_indicators = ['', 'none', 'null', 'na', 'n/a', 'nan', '\'\'', '""', "''", "None"]
+        
+        if axis == 0:  
+            filtered_rows = []
+            
+            for row in self.data:
+                keep_row = True  
+                
+                if how == 'any':
+                    for value in row.values():
+                        if str(value).strip().lower() in missing_indicators:
+                            keep_row = False  
+                            break
+                
+                elif how == 'all':
+                    all_missing = True
+                    for value in row.values():
+                        if str(value).strip().lower() not in missing_indicators:
+                            all_missing = False  
+                            break
+                    if all_missing:
+                        keep_row = False  
+
+                if keep_row:
+                    filtered_rows.append(row) 
+            
+            self.data = filtered_rows
+        
+        elif axis == 1:  
+            columns_to_keep = []
+            all_columns = self.columns()
+            
+            for col in all_columns:
+                keep_column = True  
+        
+                if how == 'any':
+                    for row in self.data:
+                        if str(row[col]).strip().lower() in missing_indicators:
+                            keep_column = False  
+                            break
+                
+                elif how == 'all':
+                    all_missing = True
+                    for row in self.data:
+                        if str(row[col]).strip().lower() not in missing_indicators:
+                            all_missing = False 
+                            break
+                    if all_missing:
+                        keep_column = False  
+                
+                if keep_column:
+                    columns_to_keep.append(col)  
+            
+            new_data = []
+            for row in self.data:
+                new_row = {}
+                for col in columns_to_keep:
+                    new_row[col] = row[col]
+                new_data.append(new_row)
+            
+            self.data = new_data
+
+        return self.data
