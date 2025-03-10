@@ -9,6 +9,7 @@ class DataFrame():
     
     def __repr__(self):
         """Return a string representation for debugging"""
+        
         return f"CSVProcessor(file_path='{self.file_path}', rows={len(self.data)})"
 
     def __len__(self):
@@ -177,4 +178,7 @@ class DataFrame():
 
             missing_values.append(row_missing)  
 
-        return missing_values  
+        return missing_values 
+
+    def fillna():
+        pass 

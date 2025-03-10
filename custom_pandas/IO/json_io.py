@@ -4,12 +4,12 @@ import os
 class JsonInputOutput:
     @classmethod
     def read_json(cls, file_path):
-        if os.path.exists(file_path):
+        if not os.path.exists(file_path):
+            raise FileNotFoundError('could not find the file')
+        else:
             with open(file_path, 'r') as file:
                 data = json.load(file)
             return data
-        else:
-            raise FileNotFoundError('could not find the file')
     
     @classmethod
     def to_json(cls, data, file_path=None, orient='records', indent=4):

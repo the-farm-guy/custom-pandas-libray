@@ -1,9 +1,7 @@
 from IO.csv_io import CsvInputOutput
-from Dataframe.pandas_dataframe import DataFrame
+from IO.excel_io import ExcelInputOutput
 
-data = CsvInputOutput.read_csv('business.csv')
-df = DataFrame(data)
-formatted_df = df.isnull()
+data = CsvInputOutput.read_csv('email.csv', skiprows = 1, delimiter = ';')
+print(data)
 
-with open('isnull_testing.txt', 'w') as file:
-    file.write(DataFrame.as_table(formatted_df)) 
+excel_data = ExcelInputOutput.to_excel(file_path = 'email.xlsx', data = data)

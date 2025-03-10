@@ -1,0 +1,20 @@
+[
+    {
+        "laura@example.com": "craig@example.com",
+        "2070": "4081",
+        "Laura": "Craig",
+        "Grey": "Johnson"
+    },
+    {
+        "laura@example.com": "mary@example.com",
+        "2070": "9346",
+        "Laura": "Mary",
+        "Grey": "Jenkins"
+    },
+    {
+        "laura@example.com": "jamie@example.com",
+        "2070": "5079",
+        "Laura": "Jamie",
+        "Grey": "Smith"
+    }
+]

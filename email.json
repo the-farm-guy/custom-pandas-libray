@@ -1,26 +1,20 @@
 [
     {
-        "Login email": "laura@example.com",
-        "Identifier": "2070",
-        "First name": "Laura",
-        "Last name": "Grey"
+        "laura@example.com": "craig@example.com",
+        "2070": "4081",
+        "Laura": "Craig",
+        "Grey": "Johnson"
     },
     {
-        "Login email": "craig@example.com",
-        "Identifier": "4081",
-        "First name": "Craig",
-        "Last name": "Johnson"
+        "laura@example.com": "mary@example.com",
+        "2070": "9346",
+        "Laura": "Mary",
+        "Grey": "Jenkins"
     },
     {
-        "Login email": "mary@example.com",
-        "Identifier": "9346",
-        "First name": "Mary",
-        "Last name": "Jenkins"
-    },
-    {
-        "Login email": "jamie@example.com",
-        "Identifier": "5079",
-        "First name": "Jamie",
-        "Last name": "Smith"
+        "laura@example.com": "jamie@example.com",
+        "2070": "5079",
+        "Laura": "Jamie",
+        "Grey": "Smith"
     }
 ]
