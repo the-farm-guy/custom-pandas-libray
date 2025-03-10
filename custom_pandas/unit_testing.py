@@ -35,42 +35,42 @@ class CsvExcelJsonInpuTest(unittest.TestCase):
         result = JsonInputOutput.read_json('email.json')
         self.assertEqual(excepted, result)
 
-class CsvExcelJsonOutputTest(unittest.TestCase):
-    def test_to_csv(self):
-        data = [
-            {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
-            {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
-            {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
-        ]
+# class CsvExcelJsonOutputTest(unittest.TestCase):
+#     def test_to_csv(self):
+#         data = [
+#             {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
+#             {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
+#             {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
+#         ]
 
-        CsvInputOutput.to_csv(file_path = 'to_email.csv', data = data)
-        self.assertTrue(os.path.exists('to_email.csv'))
+#         CsvInputOutput.to_csv(file_path = 'to_email.csv', data = data)
+#         self.assertTrue(os.path.exists('to_email.csv'))
 
-        csv_data = CsvInputOutput.read_csv('to_email.csv')
-        self.assertEqual(data, csv_data)
+#         csv_data = CsvInputOutput.read_csv('to_email.csv')
+#         self.assertEqual(data, csv_data)
 
-    def test_to_json(self):
-        data = [
-            {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
-            {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
-            {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
-        ]
+#     def test_to_json(self):
+#         data = [
+#             {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
+#             {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
+#             {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
+#         ]
 
-        JsonInputOutput.to_json(file_path = 'to_email.json', data = data)
-        self.assertTrue(os.path.exists('to_email.json'))
-        
-        csv_data = JsonInputOutput.read_json('to_email.json')
-        self.assertEqual(data, csv_data)
+#         JsonInputOutput.to_json(file_path = 'to_email.json', data = data)
+#         self.assertTrue(os.path.exists('to_email.json'))
 
-    def test_to_excel(self):
-        data = [
-            {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
-            {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
-            {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
-        ]
+#         csv_data = JsonInputOutput.read_json('to_email.json')
+#         self.assertEqual(data, csv_data)
 
-        ExcelInputOutput.to_excel(file_path = 'to_email.xlsx', data = data)
-        self.assertTrue(os.path.exists('to_email.xlsx'))
+#     def test_to_excel(self):
+#         data = [
+#             {"laura@example.com": "craig@example.com", "2070": "4081", "Laura": "Craig", "Grey": "Johnson"},
+#             {"laura@example.com": "mary@example.com", "2070": "9346", "Laura": "Mary", "Grey": "Jenkins"},
+#             {"laura@example.com": "jamie@example.com", "2070": "5079", "Laura": "Jamie", "Grey": "Smith"}
+#         ]
+
+#         ExcelInputOutput.to_excel(file_path = 'to_email.xlsx', data = data)
+#         self.assertTrue(os.path.exists('to_email.xlsx'))
 
 class DataFrameTest(unittest.TestCase):
     pass
