@@ -180,5 +180,24 @@ class DataFrame():
 
         return missing_values 
 
-    def fillna():
-        pass 
+    def fillna_fill(self, type = ''):
+            missing_indicators = {'', 'none', 'null', 'na', 'n/a', 'nan', '""', "''"} 
+            if type.lower() == 'bfill': 
+                for i in range(len(self.data)):
+                    for j, k in self.data[i].items():
+                        if k in missing_indicators:
+                            self.data[i][j] = self.data[i + 1][j]
+
+            elif type.lower() == 'ffill':
+                for i in range(len(self.data)):
+                    for j, k in self.data[i].item():
+                        if k in missing_indicators:
+                            self.data[j][k] = self.data[i - 1][j]
+
+            else:
+                raise ValueError('unsupported Type')
+
+            return self.data
+    
+    def describe(self):
+        pass

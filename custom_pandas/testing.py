@@ -1,7 +1,5 @@
 from IO.csv_io import CsvInputOutput
-from IO.excel_io import ExcelInputOutput
+from Dataframe.pandas_dataframe import DataFrame
 
-data = CsvInputOutput.read_csv('email.csv', skiprows = 1, delimiter = ';')
-print(data)
-
-excel_data = ExcelInputOutput.to_excel(file_path = 'email.xlsx', data = data)
+data = CsvInputOutput.read_csv('data_files/email.csv', delimiter = ';')
+df = DataFrame(data = data)
