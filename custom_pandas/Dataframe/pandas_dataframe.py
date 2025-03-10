@@ -199,5 +199,3 @@ class DataFrame():
 
             return self.data
     
-    def describe(self):
-        pass
