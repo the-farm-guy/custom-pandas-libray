@@ -71,10 +71,10 @@ class DataFrame():
         return table
 
     def head(self, number = 5):
-        return self.as_table(self.data[ : number])
+        return self.data[ : number]
     
     def tail(self, number = 5):
-        return self.as_table(self.data[-number : ])
+        return self.data[-number : ]
     
     def columns(self):
         return list(self.data[0].keys())
