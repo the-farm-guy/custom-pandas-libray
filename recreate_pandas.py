@@ -249,10 +249,4 @@ class ReadCsvJson:
         return self
 
 if __name__ == "__main__":
-    data = ReadCsvJson('business.csv', dtype={'Identifier': float}, delimiter=',', skiprows=0, header=True)
-    dropped_data = data.dropna(axis = 0, how = 'any')
-    print(dropped_data)
-    # print(dropeed_data[5 : 8])
-
-    with open('dropna_testing.txt', 'w') as file:
-        file.write(dropped_data.as_table())
+    pass
